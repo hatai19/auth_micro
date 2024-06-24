@@ -1,0 +1,13 @@
+SQLAlchemy~=2.0.30
+asyncpg
+psycopg
+fastapi~=0.111.0
+asyncio~=3.4.3
+passlib~=1.7.4
+psycopg2
+alembic~=1.13.1
+bcrypt
+pydantic[email]~=2.7.4
+starlette~=0.37.2
+uvicorn~=0.30.1
+python-jose[cryptography]
