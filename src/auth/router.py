@@ -126,7 +126,10 @@ async def update_user_profile(update_data: CreateUser, db: Annotated[AsyncSessio
                                user: User = Depends(get_current_user)):
     query = update(User).where(User.id == user['id']).values(
         username=update_data.username,
-        email=update_data.email
+        email=update_data.email,
+        first_name=update_data.first_name,
+        last_name=update_data.last_name,
+        password_hash=bcrypt_context.hash(update_data.password),
     )
     await db.execute(query)
     await db.commit()
