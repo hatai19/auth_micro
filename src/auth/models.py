@@ -1,6 +1,6 @@
-from passlib.handlers.sha2_crypt import sha256_crypt
-from sqlalchemy import Integer, String
-from sqlalchemy.orm import declarative_base, mapped_column, Mapped, DeclarativeBase
+from sqlalchemy.orm import mapped_column, Mapped, DeclarativeBase
+
+from src.auth.schemas import UserSchema
 
 
 class Base(DeclarativeBase):
@@ -11,8 +11,17 @@ class Base(DeclarativeBase):
 class User(Base):
     __tablename__ = "user"
 
-    first_name = mapped_column(String)
-    last_name = mapped_column(String)
-    username = mapped_column(String)
-    email = mapped_column(String, unique=True)
+    first_name: Mapped[str] = mapped_column()
+    last_name: Mapped[str] = mapped_column()
+    username: Mapped[str| None] = mapped_column()
+    email: Mapped[str] = mapped_column(unique=True)
     password_hash: Mapped[str] = mapped_column()
+
+    def to_read_model(self) -> UserSchema:
+        return UserSchema(
+            id=self.id,
+            first_name=self.first_name,
+            last_name=self.last_name,
+            username=self.username,
+            password=self.password_hash
+        )
